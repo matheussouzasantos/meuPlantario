@@ -15,68 +15,70 @@ public class MeuPlantario {
         Scanner sc = new Scanner(System.in);
         int menu;
 
+        do {
 
-        // cadastraPlanta();
-        // fechaArqEsc();
-        // abreArqLeitura();
-        // leRegistro();
-        // fechaArqLeit();
-        abreArqEscrita();
-        System.out.println("\n=== Meu Plantário ===");
-        System.out.println("1 - Cadastro de Plantas");
-        System.out.println("2 - Listar Plantas");
-        System.out.println("3 - Remover Plantas");
-        System.out.println("4 - Alterar Cadastro de Plantas");
-        System.out.println("5 - Regar");
-        System.out.println("6 - Adubar");
-        System.out.println("7 - Ver Lembretes");
-        System.out.println("8 - Sugestão de plantas");
-        System.out.println("9 - Sair");
-        System.out.println("---------------------");
-        System.out.print("Opção: ");
-        menu = sc.nextInt();
-        while (menu > 9 && menu < 1) {
-            System.out.println("ERRO. digite uma opção válida.");
+
+            // cadastraPlanta();
+            // fechaArqEsc();
+            // abreArqLeitura();
+            // leRegistro();
+            // fechaArqLeit();
+            abreArqEscrita();
+            System.out.println("\n=== Meu Plantário ===");
+            System.out.println("1 - Cadastro de Plantas");
+            System.out.println("2 - Listar Plantas");
+            System.out.println("3 - Remover Plantas");
+            System.out.println("4 - Alterar Cadastro de Plantas");
+            System.out.println("5 - Regar");
+            System.out.println("6 - Adubar");
+            System.out.println("7 - Ver Lembretes");
+            System.out.println("8 - Sugestão de plantas");
+            System.out.println("9 - Sair");
+            System.out.println("---------------------");
+            System.out.print("Opção: ");
             menu = sc.nextInt();
-        }
+            while (menu > 9 && menu < 1) {
+                System.out.println("ERRO. digite uma opção válida.");
+                menu = sc.nextInt();
+            }
 
-        switch (menu) {
-            case 1:
-                System.out.print("\n===== CADASTRO DE PLANTAS ======\n");
-                cadastraPlanta();
-                break;
-            case 2:
-                System.out.print("\n===== LISTAGEM DE PLANTAS ======\n");
-                // função
-                break;
-            case 3:
-                System.out.print("\n===== REMOÇÃO DE CADASTRO ======\n");
-                // função
-                break;
-            case 4:
-                System.out.print("\n===== ALTERAÇÃO DE PLANTAS =====\n");
-                // função
-                break;
-            case 5:
-                System.out.print("\n===== REGAR PLANTA =====\n");
-                // função
-                break;
-            case 6:
-                System.out.print("\n===== ADUBAR PLANTA =====\n");
-                // função
-                break;
-            case 7:
-                System.out.print("\n===== LEMBRETES =====\n");
-                // função
-                break;
-            case 8:
-                System.out.print("\n===== SUGESTÃO DE PLANTAS =====\n");
-                // função
-                break;
-            default:
-                System.out.print("Encerrando...");
-        }
-        sc.close();
+            switch (menu) {
+                case 1:
+                    System.out.print("\n===== CADASTRO DE PLANTAS ======\n");
+                    cadastraPlanta();
+                    break;
+                case 2:
+                    System.out.print("\n===== LISTAGEM DE PLANTAS ======\n");
+                    listaPlantas();
+                    break;
+                case 3:
+                    System.out.print("\n===== REMOÇÃO DE CADASTRO ======\n");
+                    // função
+                    break;
+                case 4:
+                    System.out.print("\n===== ALTERAÇÃO DE PLANTAS =====\n");
+                    // função
+                    break;
+                case 5:
+                    System.out.print("\n===== REGAR PLANTA =====\n");
+                    // função
+                    break;
+                case 6:
+                    System.out.print("\n===== ADUBAR PLANTA =====\n");
+                    // função
+                    break;
+                case 7:
+                    System.out.print("\n===== LEMBRETES =====\n");
+                    // função
+                    break;
+                case 8:
+                    System.out.print("\n===== SUGESTÃO DE PLANTAS =====\n");
+                    // função
+                    break;
+                default:
+                    System.out.print("Encerrando...");
+            }
+        } while (menu != 9);
     }
 
     public static void abreArqEscrita() {
@@ -151,7 +153,7 @@ public class MeuPlantario {
                 intervaloAdubo = scCadastro.nextInt();
             }
 
-            System.out.println("Digite o tipo de adubo: ");
+            System.out.print("Digite o tipo de adubo: ");
             scCadastro.nextLine();
             tipoAdubo = scCadastro.nextLine();
 
@@ -190,7 +192,99 @@ public class MeuPlantario {
     }
 
     public static void listaPlantas() {
+        Scanner scLista = new Scanner(System.in);
+        int switchLista;
+        String filtroTipo = "";
+
+        System.out.print(
+                "\nOpções de listagem: " +
+                "\n   1 - Listar todas as plantas: " +
+                "\n   2 - Listar plantas de sombra: " +
+                "\n   3 - Listar plantas de meia-sombra: " +
+                "\n   4 - Listar plantas de sol: " +
+                "\nOpção: ");
+        switchLista = scLista.nextInt();
+        while (switchLista < 1 || switchLista > 4) {
+            System.out.print("Opção inexistente. Digite novamente: ");
+            switchLista = scLista.nextInt();
+        }
+
+        switch (switchLista) {
+            case 1:
+                filtroTipo = "todas";
+                break;
+            case 2:
+                filtroTipo = "sombra";
+                break;
+            case 3:
+                filtroTipo = "meia-sombra";
+                break;
+            default:
+                filtroTipo = "sol";
+        }
+
         abreArqLeitura();
+        exibeListaPlantas(filtroTipo);
+        fechaArqLeit();
+    }
+
+    public static void exibeListaPlantas(String filtro) {
+        try {
+            int contador = 0;
+            boolean encontrou = false;
+
+            System.out.println("\n=====================================================");
+            if (filtro.equals("t0das")) {
+                System.out.println("LISTAGEM DE TODAS AS PLANTAS");
+            } else {
+                System.out.println("LISTAGEM DE PLANTAS DE " + filtro.toUpperCase());
+            }
+            System.out.println("\n=====================================================");
+            System.out.printf("%-15s %-15s %-12s %-15s %-12s %-20s%n",
+                    "Nome", "Tipo", "Rega(dias)", "Adubo(dias)", "Tipo Rega", "Tipo Adubo");
+            System.out.println("\n-----------------------------------------------------");
+            while (arqEnt.hasNext()) {
+                String linha = arqEnt.nextLine();
+
+                String[] dados = linha.split(";");
+
+                if (dados.length >= 6) {
+                    String nome = dados[0];
+                    String tipoPlanta = dados[1];
+                    int intervaloRega = Integer.parseInt(dados[2]);
+                    int intervaloAdubo = Integer.parseInt(dados[3]);
+                    String tipoRega = dados[4];
+                    String tipoAdubo = dados[5];
+
+                    if (filtro.equals("todas") || tipoPlanta.equals(filtro)) {
+                        System.out.printf("%-15s %-15s %-12d %-15d %-12s %-20s%n",
+                                nome, tipoPlanta, intervaloRega, intervaloAdubo,
+                                tipoRega, tipoAdubo);
+                        contador++;
+                        encontrou = true;
+                    }
+                }
+            }
+
+            System.out.println("\n-----------------------------------------------------");
+
+            if (!encontrou) {
+                if (filtro.equals("todas")) {
+                    System.out.println("Nenhuma planta cadastrada ainda.");
+                } else {
+                    System.out.printf("\nNenhuma planta do tipo '%s' encontrada\n", filtro);
+                }
+            } else {
+                System.out.println("Total de plantas listadas: " + contador);
+            }
+            System.out.println("\n=====================================================");
+        } catch (NoSuchElementException elementException) {
+            System. err.println("Erro ao ler os dados do arquivo.");
+        } catch (IllegalStateException stateException) {
+            System.err.println("Erro na leitura do arquivo.");
+        } catch (NumberFormatException numberException) {
+            System.err. println("Arquivo com formato incorreto.");
+        }
     }
 
     public static void alteraPlanta() {
