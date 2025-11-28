@@ -1,2 +1,1 @@
-Flor;1;45;media;
-Broto;1;3;media;
+Gustavo;1;45;alta;Ovo;450;

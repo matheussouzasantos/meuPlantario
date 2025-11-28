@@ -26,12 +26,16 @@ public class MeuPlantario {
         System.out.println("1 - Cadastro de Plantas");
         System.out.println("2 - Listar Plantas");
         System.out.println("3 - Remover Plantas");
-        System.out.println("4 - Ver Lembretes");
-        System.out.println("5 - Sair");
+        System.out.println("4 - Editar Planta");
+        System.out.println("5 - Regar");
+        System.out.println("6 - Adubar");
+        System.out.println("7 - Ver Lembretes");
+        System.out.println("Sugestão de plantas");
+        System.out.println("8 - Sair");
         System.out.println("---------------------");
         System.out.print("Opção: ");
         menu = sc.nextInt();
-        while (menu > 5 && menu < 1) {
+        while (menu > 8 && menu < 1) {
             System.out.println("ERRO. digite uma opção válida.");
             menu = sc.nextInt();
         }
@@ -41,13 +45,41 @@ public class MeuPlantario {
                 cadastraPlanta();
                 break;
             case 2:
-                System.out.println("Ferramenta ainda nao disponivel.");
+                System.out.print("\n===== LISTAGEM DE PLANTAS ======\n");
+                System.out.println("Deseja listar que tipo de planta?");
+                System.out.println("");
                 break;
             case 3:
-                System.out.println("Ferramenta ainda nao disponivel.");
+                String nomePlanta;
+                System.out.print("\n===== EDIÇÃO DE CADASTRO ======\n");
+                System.out.println("Digite o nome da planta que deseja alterar: ");
+                sc.nextLine();
+                nomePlanta = sc.nextLine();
+                System.out.println("Oque deseja editar?");
+                System.out.println("1 - Nome");
+                System.out.println("2 - Intervalo de Rega");
+                System.out.println("2 - Intervalo de Adubagem");
+                System.out.println("3 - Tipo de Rega");
+                System.out.println("4 - Tipo de Adubo");
+                System.out.println("5 - Quantidade de Adubo");
+                System.out.print("Opção: ");
+                menu = sc.nextInt();
+                while (menu > 5 && menu < 1) {
+                    System.out.println("ERRO. digite uma opção válida.");
+                    menu = sc.nextInt();
+                }
                 break;
             case 4:
                 System.out.println("Ferramenta ainda nao disponivel.");
+                break;
+            case 5:
+                System.out.println("Ferramenta ainda nao disponível.");
+                break;
+            case 6:
+                System.out.println("Ferramenta ainda nao disponível.");
+                break;
+            case 7:
+                System.out.println("Ferramenta ainda nao disponível.");
                 break;
             default:
                 System.out.println("Ferramenta ainda nao disponivel.");
@@ -82,10 +114,10 @@ public class MeuPlantario {
 
     public static void cadastraPlanta() {
         Scanner scCadastro = new Scanner(System.in);
-        int numRega, intervaloRega, intervaloAdubo;
-        String tipoRega = "";
+        int numRega, intervaloRega, intervaloAdubo, qtdAdubo;
+        String tipoRega = "", tipoAdubo = "";
 
-        System.out.printf("\n===== CADASTRO DE PLANTAS ======\n");
+        System.out.print("\n===== CADASTRO DE PLANTAS ======\n");
         try {
             System.out.print("Digite o nome da planta: ");
             String nome = scCadastro.next();
@@ -103,6 +135,17 @@ public class MeuPlantario {
             while (intervaloAdubo <= 0) {
                 System.out.print("Intervalo inválido. Digite um número positivo: ");
                 intervaloAdubo = scCadastro.nextInt();
+            }
+
+            System.out.println("Digite o tipo de adubo: ");
+            scCadastro.nextLine();
+            tipoAdubo = scCadastro.nextLine();
+
+            System.out.println("Digite a quantidade de adubo: ");
+            qtdAdubo = scCadastro.nextInt();
+            while (qtdAdubo <= 0) {
+                System.out.println("Digite uma quantidade válida de adubo (g): ");
+                qtdAdubo = scCadastro.nextInt();
             }
 
             System.out.print(
@@ -127,7 +170,7 @@ public class MeuPlantario {
                     tipoRega = "alta";
                 }
 
-            arqSaida.format("%s;%d;%d;%s;%n", nome, intervaloRega, intervaloAdubo, tipoRega);
+            arqSaida.format("%s;%d;%d;%s;%s;%d;%n", nome, intervaloRega, intervaloAdubo, tipoRega, tipoAdubo, qtdAdubo);
             fechaArqEsc();
             System.out.printf("%nPlanta '%s' foi cadastrada com sucesso!%n", nome);
 
