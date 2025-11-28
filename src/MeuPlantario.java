@@ -26,63 +26,55 @@ public class MeuPlantario {
         System.out.println("1 - Cadastro de Plantas");
         System.out.println("2 - Listar Plantas");
         System.out.println("3 - Remover Plantas");
-        System.out.println("4 - Editar Planta");
+        System.out.println("4 - Alterar Cadastro de Plantas");
         System.out.println("5 - Regar");
         System.out.println("6 - Adubar");
         System.out.println("7 - Ver Lembretes");
-        System.out.println("Sugestão de plantas");
-        System.out.println("8 - Sair");
+        System.out.println("8 - Sugestão de plantas");
+        System.out.println("9 - Sair");
         System.out.println("---------------------");
         System.out.print("Opção: ");
         menu = sc.nextInt();
-        while (menu > 8 && menu < 1) {
+        while (menu > 9 && menu < 1) {
             System.out.println("ERRO. digite uma opção válida.");
             menu = sc.nextInt();
         }
 
         switch (menu) {
             case 1:
+                System.out.print("\n===== CADASTRO DE PLANTAS ======\n");
                 cadastraPlanta();
                 break;
             case 2:
                 System.out.print("\n===== LISTAGEM DE PLANTAS ======\n");
-                System.out.println("Deseja listar que tipo de planta?");
-                System.out.println("");
+                // função
                 break;
             case 3:
-                String nomePlanta;
-                System.out.print("\n===== EDIÇÃO DE CADASTRO ======\n");
-                System.out.println("Digite o nome da planta que deseja alterar: ");
-                sc.nextLine();
-                nomePlanta = sc.nextLine();
-                System.out.println("Oque deseja editar?");
-                System.out.println("1 - Nome");
-                System.out.println("2 - Intervalo de Rega");
-                System.out.println("2 - Intervalo de Adubagem");
-                System.out.println("3 - Tipo de Rega");
-                System.out.println("4 - Tipo de Adubo");
-                System.out.println("5 - Quantidade de Adubo");
-                System.out.print("Opção: ");
-                menu = sc.nextInt();
-                while (menu > 5 && menu < 1) {
-                    System.out.println("ERRO. digite uma opção válida.");
-                    menu = sc.nextInt();
-                }
+                System.out.print("\n===== REMOÇÃO DE CADASTRO ======\n");
+                // função
                 break;
             case 4:
-                System.out.println("Ferramenta ainda nao disponivel.");
+                System.out.print("\n===== ALTERAÇÃO DE PLANTAS =====\n");
+                // função
                 break;
             case 5:
-                System.out.println("Ferramenta ainda nao disponível.");
+                System.out.print("\n===== REGAR PLANTA =====\n");
+                // função
                 break;
             case 6:
-                System.out.println("Ferramenta ainda nao disponível.");
+                System.out.print("\n===== ADUBAR PLANTA =====\n");
+                // função
                 break;
             case 7:
-                System.out.println("Ferramenta ainda nao disponível.");
+                System.out.print("\n===== LEMBRETES =====\n");
+                // função
+                break;
+            case 8:
+                System.out.print("\n===== SUGESTÃO DE PLANTAS =====\n");
+                // função
                 break;
             default:
-                System.out.println("Ferramenta ainda nao disponivel.");
+                System.out.print("Encerrando...");
         }
         sc.close();
     }
@@ -114,14 +106,36 @@ public class MeuPlantario {
 
     public static void cadastraPlanta() {
         Scanner scCadastro = new Scanner(System.in);
-        int numRega, intervaloRega, intervaloAdubo, qtdAdubo;
-        String tipoRega = "", tipoAdubo = "";
+        int switchRega, switchTipo, intervaloRega, intervaloAdubo, qtdAdubo;
+        String tipoRega = "", tipoAdubo = "", tipoPlanta = "";
 
-        System.out.print("\n===== CADASTRO DE PLANTAS ======\n");
         try {
             System.out.print("Digite o nome da planta: ");
             String nome = scCadastro.next();
             scCadastro.nextLine();
+
+            System.out.print(
+                    "Planta de:" +
+                    "\n   1 - Sombra" +
+                    "\n   2 - Meia-sombra" +
+                    "\n   3 - Sol" +
+                    "\nOpção: ");
+            switchTipo = scCadastro.nextInt();
+            while (switchTipo < 1 || switchTipo > 3) {
+                System.out.print("Tipo de planta inválido. Digite novamente: ");
+                switchTipo = scCadastro.nextInt();
+            }
+            switch (switchTipo) {
+                case 1:
+                    tipoPlanta = "sombra";
+                    break;
+                case 2:
+                    tipoPlanta = "meia-sombra";
+                    break;
+                default:
+                    tipoPlanta = "sol";
+            }
+
 
             System.out.print("Digite o intervalo de rega (dias): ");
             intervaloRega = scCadastro.nextInt();
@@ -141,25 +155,18 @@ public class MeuPlantario {
             scCadastro.nextLine();
             tipoAdubo = scCadastro.nextLine();
 
-            System.out.println("Digite a quantidade de adubo: ");
-            qtdAdubo = scCadastro.nextInt();
-            while (qtdAdubo <= 0) {
-                System.out.println("Digite uma quantidade válida de adubo (g): ");
-                qtdAdubo = scCadastro.nextInt();
-            }
-
             System.out.print(
-                    "Qual das regas é feita?\n" +
-                            "     1 - Rega baixa\n" +
-                            "     2 - Rega média\n" +
-                            "     3 - Rega alta\n");
-            System.out.print("Opção: ");
-            numRega = scCadastro.nextInt();
-            while (numRega < 1 || numRega > 3) {
+                    "Qual das regas é feita?" +
+                    "\n   1 - Rega baixa" +
+                    "\n   2 - Rega média" +
+                    "\n   3 - Rega alta" +
+                    "\nOpção: ");
+            switchRega = scCadastro.nextInt();
+            while (switchRega < 1 || switchRega > 3) {
                 System.out.print("Tipo de rega inválido. Digite novamente: ");
-                numRega = scCadastro.nextInt();
+                switchRega = scCadastro.nextInt();
             }
-            switch (numRega) {
+            switch (switchRega) {
                 case 1:
                     tipoRega = "baixa";
                     break;
@@ -168,9 +175,9 @@ public class MeuPlantario {
                     break;
                 default:
                     tipoRega = "alta";
-                }
+            }
 
-            arqSaida.format("%s;%d;%d;%s;%s;%d;%n", nome, intervaloRega, intervaloAdubo, tipoRega, tipoAdubo, qtdAdubo);
+            arqSaida.format("%s;%s;%d;%d;%s;%s;%n", nome, tipoPlanta, intervaloRega, intervaloAdubo, tipoRega, tipoAdubo);
             fechaArqEsc();
             System.out.printf("%nPlanta '%s' foi cadastrada com sucesso!%n", nome);
 
@@ -180,6 +187,20 @@ public class MeuPlantario {
             System.err.println("Entrada inválida ou finalizada inesperadamente. Digite novamente.");
             scCadastro.nextLine();
         }
+    }
+
+    public static void listaPlantas() {
+        abreArqLeitura();
+    }
+
+    public static void alteraPlanta() {
+        Scanner sc = new Scanner(System.in);
+        String [] linhas = new String[100];
+        String nomeBusca;
+        int total = 0;
+        boolean encontrado = false;
+
+        leRegistro();
     }
 
     public static void leRegistro() {
