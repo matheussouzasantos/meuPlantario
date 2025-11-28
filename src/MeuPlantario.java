@@ -16,8 +16,6 @@ public class MeuPlantario {
         int menu;
 
         do {
-
-
             // cadastraPlanta();
             // fechaArqEsc();
             // abreArqLeitura();
@@ -285,6 +283,10 @@ public class MeuPlantario {
         } catch (NumberFormatException numberException) {
             System.err. println("Arquivo com formato incorreto.");
         }
+    }
+
+    public static void removePlanta() {
+
     }
 
     public static void alteraPlanta() {
