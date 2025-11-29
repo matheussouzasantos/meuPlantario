@@ -18,7 +18,6 @@ public class MeuPlantario {
         do {
             // cadastraPlanta();
             // fechaArqEsc();
-            // abreArqLeitura();
             // leRegistro();
             // fechaArqLeit();
             abreArqEscrita();
@@ -51,7 +50,7 @@ public class MeuPlantario {
                     break;
                 case 3:
                     System.out.print("\n===== REMOÇÃO DE CADASTRO ======\n");
-                    // função
+                    removePlanta();
                     break;
                 case 4:
                     System.out.print("\n===== ALTERAÇÃO DE PLANTAS =====\n");
@@ -286,7 +285,56 @@ public class MeuPlantario {
     }
 
     public static void removePlanta() {
+        Scanner scRemove = new Scanner(System.in);
+        String[] linhas = new String[100];
+        int total = 0;
+        boolean encontrou = false;
 
+        abreArqLeitura();
+
+        while (arqEnt.hasNextLine() && total < 100) {
+            linhas[total] = arqEnt.nextLine();
+            total++;
+        }
+        fechaArqLeit();
+
+        if (total == 0) {
+            System.out.println("Nenhuma planta cadastrada.");
+            return;
+        }
+
+        System.out.println("Plantas cadastradas: ");
+        for (int i = 0; i < total; i++) {
+            String[] p = linhas[i].split(";");
+            System.out.println((i + 1) + " - " + p[0]);
+        }
+
+        System.out.println("Digite o nome da planta para remover: ");
+        String nome = scRemove.nextLine();
+
+        try {
+            Formatter arqNovo = new Formatter("plantas.txt");
+            for (int i = 0; i < total; i++) {
+                String[] p = linhas[i].split(";");
+                if (p[0].equalsIgnoreCase(nome) && !encontrou) {
+                    System.out.println("Planta '" + p[0] + "' removida!");
+                    encontrou = true;
+                } else {
+                    arqNovo.format("%s%n", linhas[i]);
+                }
+            }
+            arqNovo.close();
+
+            if (!encontrou) {
+                System.out.println("Planta não encontrada.");
+            }
+        } catch (SecurityException securityException) {
+            System.err.println("Permissão de Escrita Negada.  Fechando.. .");
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.err.println("Erro ao abrir o arquivo para escrita.");
+        } catch (FormatterClosedException formatterClosedException) {
+            System.err.println("Erro de escrita no arquivo.");
+        }
     }
 
     public static void alteraPlanta() {
