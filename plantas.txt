@@ -1,4 +1,4 @@
-Cacto;sol;14;0;baixa;nenhum;
+Cacto;sol;14;90;baixa;Farinha de Osso;
 Gerânio;sol;7;30;media;NPK;
 Mini-rosa;sol;3;30;alta;NPK;
 Bromélia;meia-sombra;7;30;media;Húmus;
